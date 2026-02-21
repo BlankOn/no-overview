@@ -1,4 +1,4 @@
-no-overview-gnome-shell-extension (999-1) verbeek; urgency=medium
+no-overview-gnome-shell-extension (1.0.0-1) verbeek; urgency=medium
 
   * Initial Debian packaging of No Overview GNOME Shell extension.
   * Per-user autostart-based deployment for extension management.
