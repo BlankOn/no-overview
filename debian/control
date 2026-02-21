@@ -1,0 +1,15 @@
+Source: no-overview-gnome-shell-extension
+Section: gnome
+Priority: optional
+Maintainer: BlankOn Linux <blankon-dev@googlegroups.com>
+Build-Depends: debhelper-compat (= 13), libglib2.0-dev-bin
+Standards-Version: 4.6.2
+Homepage: https://github.com/fthx/no-overview
+Rules-Requires-Root: no
+
+Package: no-overview-gnome-shell-extension
+Architecture: all
+Depends: gnome-shell (>= 45~), ${misc:Depends}
+Description: No overview at start-up GNOME Shell Extension
+ A GNOME Shell extension that hides the overview screen on startup.
+ Prevents the Activities overview from appearing when GNOME Shell starts.

@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	# Install extension files
+	install -d $(CURDIR)/debian/no-overview-gnome-shell-extension/usr/share/gnome-shell/extensions/no-overview@fthx
+	install -m 644 extension.js $(CURDIR)/debian/no-overview-gnome-shell-extension/usr/share/gnome-shell/extensions/no-overview@fthx/
+	install -m 644 metadata.json $(CURDIR)/debian/no-overview-gnome-shell-extension/usr/share/gnome-shell/extensions/no-overview@fthx/
+
+	# Install GSettings override
+	install -d $(CURDIR)/debian/no-overview-gnome-shell-extension/usr/share/glib-2.0/schemas
+	install -m 644 debian/10_no-overview.gschema.override $(CURDIR)/debian/no-overview-gnome-shell-extension/usr/share/glib-2.0/schemas/
+
+	# Install per-user update script
+	install -d $(CURDIR)/debian/no-overview-gnome-shell-extension/usr/lib/no-overview-extension
+	install -m 755 debian/no-overview-update-user.sh $(CURDIR)/debian/no-overview-gnome-shell-extension/usr/lib/no-overview-extension/
+
+	# Install autostart desktop file to /etc/skel
+	install -d $(CURDIR)/debian/no-overview-gnome-shell-extension/etc/skel/.config/autostart
+	install -m 644 debian/no-overview-extension-update.desktop $(CURDIR)/debian/no-overview-gnome-shell-extension/etc/skel/.config/autostart/

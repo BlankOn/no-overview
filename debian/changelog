@@ -1,0 +1,6 @@
+no-overview-gnome-shell-extension (999-1) verbeek; urgency=medium
+
+  * Initial Debian packaging of No Overview GNOME Shell extension.
+  * Per-user autostart-based deployment for extension management.
+
+ -- BlankOn Linux <blankon-dev@googlegroups.com>  Sat, 21 Feb 2026 12:00:00 +0700

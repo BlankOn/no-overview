@@ -1,0 +1,36 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        # Compile GSettings schemas
+        if command -v glib-compile-schemas >/dev/null 2>&1; then
+            glib-compile-schemas /usr/share/glib-2.0/schemas/ || true
+        fi
+
+        # Deploy autostart to existing users (uid >= 1000)
+        DESKTOP_FILE="/etc/skel/.config/autostart/no-overview-extension-update.desktop"
+        if [ -f "$DESKTOP_FILE" ]; then
+            for HOME_DIR in /home/*; do
+                [ -d "$HOME_DIR" ] || continue
+                USER_NAME=$(basename "$HOME_DIR")
+                USER_UID=$(id -u "$USER_NAME" 2>/dev/null) || continue
+                [ "$USER_UID" -ge 1000 ] || continue
+
+                AUTOSTART_DIR="$HOME_DIR/.config/autostart"
+                mkdir -p "$AUTOSTART_DIR"
+                cp "$DESKTOP_FILE" "$AUTOSTART_DIR/"
+                chown -R "$USER_NAME":"$USER_NAME" "$HOME_DIR/.config/autostart" || true
+
+                # Update user's extension copy immediately
+                UPDATE_SCRIPT="/usr/lib/no-overview-extension/no-overview-update-user.sh"
+                if [ -x "$UPDATE_SCRIPT" ]; then
+                    su -s /bin/sh -c "$UPDATE_SCRIPT" "$USER_NAME" || true
+                fi
+            done
+        fi
+        ;;
+esac
+
+#DEBHELPER#
+exit 0

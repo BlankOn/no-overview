@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=No Overview Extension Updater
+Exec=/usr/lib/no-overview-extension/no-overview-update-user.sh
+Hidden=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
